@@ -1,0 +1,39 @@
+---
+import Button from "./Button.astro";
+
+const { banner } = Astro.props;
+const {
+  title,
+  desc,
+  bgColor,
+  textColor,
+  buttonText,
+  buttonLink,
+  buttonPriColor,
+  buttonSecColor,
+} = banner;
+---
+
+<section>
+  <div class="container mx-auto px-5 py-16">
+    <div
+      class={`px-8 py-12 rounded-lg flex justify-between ${bgColor} ${textColor}`}
+    >
+      <div class="w-8/12">
+        <h2 class="text-4xl xl:text-5xl font-black">{title}</h2>
+        <p class="text-lg mt-2 opacity-80">
+          {desc}
+        </p>
+      </div>
+
+      <div class="z-10 flex-1 flex justify-end items-center">
+        <Button
+          text={buttonText}
+          link={buttonLink}
+          priColor={buttonPriColor}
+          secColor={buttonSecColor}
+        />
+      </div>
+    </div>
+  </div>
+</section>

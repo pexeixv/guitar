@@ -1,0 +1,47 @@
+---
+const pathname = new URL(Astro.request.url).pathname.slice(1);
+
+const active = "text-violet-400";
+
+const links = [
+  {
+    name: "Home",
+    route: "",
+  },
+  {
+    name: "About",
+    route: "about",
+  },
+  {
+    name: "Blog",
+    route: "blog",
+  },
+  {
+    name: "Contact",
+    route: "contact",
+  },
+];
+---
+
+<header class="bg-gradient-to-r from-black to-violet-800 text-white">
+  <div class="container mx-auto px-5 py-5">
+    <div class="flex items-center">
+      <a href={pathname == "" ? "#" : "/"} class="font-black text-lg"
+        >GuitarGuru</a
+      >
+      <div class="h-8 w-0.5 bg-neutral-400 mx-8"></div>
+      <nav class="flex items-center gap-4 text-neutral-400">
+        {
+          links.map((link) => (
+            <a
+              href={pathname == link.route ? "#" : `/${link.route}`}
+              class={pathname == link.route ? active : ""}
+            >
+              {link.name}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </div>
+</header>

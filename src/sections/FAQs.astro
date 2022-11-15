@@ -1,0 +1,32 @@
+---
+const faqs = [
+  {
+    q: "Some question?",
+    a: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a urna sagittis, accumsan mauris ve.",
+  },
+  {
+    q: "Another question?",
+    a: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+  {
+    q: "What question?",
+    a: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a urna sagittis.",
+  },
+];
+---
+
+<section>
+  <div class="container mx-auto px-5 py-16 lg:py-28">
+    <h2 class="text-4xl xl:text-5xl font-black">FAQs</h2>
+    <div class="grid lg:grid-cols-3 mt-12 lg:mt-20 gap-8">
+      {
+        faqs.map((faq) => (
+          <div class="max-w-sm space-y-2">
+            <h3 class="text-2xl font-bold">{faq.q}</h3>
+            <p class="text-neutral-300">{faq.a}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
