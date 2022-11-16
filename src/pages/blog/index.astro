@@ -3,7 +3,7 @@ import Layout from "../../layouts/Layout.astro";
 import { contentfulClient } from "../../lib/contentful";
 
 import type { BlogPost } from "../../lib/contentful";
-import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import Blog from "../../components/Blog.astro";
 
 const blogPosts = await contentfulClient.getEntries<BlogPost>({
   content_type: "blogPost",
@@ -21,19 +21,10 @@ const blogPosts = await contentfulClient.getEntries<BlogPost>({
           vestibulum.
         </p>
       </div>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-        {
-          blogPosts.items.map((post) => (
-            <a href={`/blog/${post.fields.slug}`}>
-              <div>
-                <h2>{post.fields.title}</h2>
-                <img src={post.fields.image?.fields?.file?.url} alt="" />
-                <p>{post.fields.excerpt}</p>
-                <p>{post.fields.date}</p>
-              </div>
-            </a>
-          ))
-        }
+      <div
+        class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-20 mt-12 lg:mt-20"
+      >
+        {blogPosts.items.map((post) => <Blog key={post.fields.title} {post} />)}
       </div>
     </div>
   </section>

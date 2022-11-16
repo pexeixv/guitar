@@ -6,8 +6,14 @@ export interface BlogPost {
   excerpt: string;
   slug: string;
   date: string;
-  image: object;
-  content: object;
+  image: {
+    fields: {
+      file: {
+        url: string;
+      };
+    };
+  };
+  content: Document;
 }
 
 export const contentfulClient = contentful.createClient({

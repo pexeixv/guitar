@@ -21,10 +21,17 @@ const links = [
     route: "contact",
   },
 ];
+
+const linkActive = (pathname, route) => {
+  if (!route && !pathname) return true;
+  if (!route && pathname) return false;
+  if (pathname.includes(route)) return true;
+  return false;
+};
 ---
 
 <header class="bg-gradient-to-r from-black to-violet-800 text-white">
-  <div class="container mx-auto px-12 py-5">
+  <div class="container mx-auto px-5 py-5">
     <div class="flex items-center">
       <a href={pathname == "" ? "#" : "/"} class="font-black text-lg"
         >GuitarGuru</a
@@ -35,7 +42,7 @@ const links = [
           links.map((link) => (
             <a
               href={pathname == link.route ? "#" : `/${link.route}`}
-              class={pathname == link.route ? active : ""}
+              class={linkActive(pathname, link.route) ? active : ""}
             >
               {link.name}
             </a>

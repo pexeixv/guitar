@@ -17,16 +17,16 @@ const {
 <section>
   <div class="container mx-auto px-5 py-16">
     <div
-      class={`px-8 py-12 rounded-lg flex justify-between ${bgColor} ${textColor}`}
+      class={`px-8 py-12 rounded-lg flex flex-col lg:flex-row justify-between ${bgColor} ${textColor}`}
     >
-      <div class="w-8/12">
+      <div class="lg:w-8/12">
         <h2 class="text-4xl xl:text-5xl font-black">{title}</h2>
         <p class="text-lg mt-2 opacity-80">
           {desc}
         </p>
       </div>
 
-      <div class="z-10 flex-1 flex justify-end items-center">
+      <div class="z-10 flex-1 flex lg:justify-end items-center mt-6 lg:mt-0">
         <Button
           text={buttonText}
           link={buttonLink}
