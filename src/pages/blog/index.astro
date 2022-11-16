@@ -1,0 +1,40 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { contentfulClient } from "../../lib/contentful";
+
+import type { BlogPost } from "../../lib/contentful";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+
+const blogPosts = await contentfulClient.getEntries<BlogPost>({
+  content_type: "blogPost",
+  order: "-sys.createdAt",
+});
+---
+
+<Layout title="Blog">
+  <section>
+    <div class="container mx-auto px-5 py-16 lg:py-28">
+      <div class="lg:w-1/2">
+        <h1 class="text-4xl xl:text-5xl font-black">Blog</h1>
+        <p class="mt-4">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
+          vestibulum.
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+        {
+          blogPosts.items.map((post) => (
+            <a href={`/blog/${post.fields.slug}`}>
+              <div>
+                <h2>{post.fields.title}</h2>
+                <img src={post.fields.image?.fields?.file?.url} alt="" />
+                <p>{post.fields.excerpt}</p>
+                <p>{post.fields.date}</p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>
