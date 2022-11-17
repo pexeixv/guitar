@@ -13,7 +13,9 @@ const blogPosts = await contentfulClient.getEntries<BlogPost>({
 <section>
   <div class="container mx-auto px-5 py-16 max-w-7xl">
     <h2 class="text-4xl xl:text-5xl font-black">Blog</h2>
-    <div class="grid lg:grid-cols-3 mt-12 lg:mt-20 gap-10 lg:gap-20">
+    <div
+      class="grid lg:grid-cols-3 mt-12 lg:mt-20 gap-10 lg:gap-20 justify-center"
+    >
       {
         blogPosts.items.map((post) => (
           <BlogCard key={post.fields.title} {post} />
