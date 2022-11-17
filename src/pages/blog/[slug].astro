@@ -3,6 +3,19 @@ import { contentfulClient } from "../../lib/contentful";
 import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
 import type { BlogPost } from "../../lib/contentful";
 import Layout from "../../layouts/Layout.astro";
+import BlogCard from "../../components/BlogCard.astro";
+import Banner from "../../components/Banner.astro";
+
+const banner = {
+  title: "Want to get rockin'?",
+  desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  bgColor: "bg-violet-900",
+  textColor: "text-white",
+  buttonText: "Contact us",
+  buttonLink: "/contact",
+  buttonPriColor: "bg-black",
+  buttonSecColor: "bg-violet-400",
+};
 
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries<BlogPost>({
@@ -31,21 +44,44 @@ const formatDate = (string) => {
   const toDateString = date.toDateString();
   return toDateString.substring(4);
 };
+
+const morePosts = await contentfulClient.getEntries<BlogPost>({
+  content_type: "blogPost",
+  order: "-sys.createdAt",
+  limit: 3,
+});
+
+const recentPostsOtherThanCurrent = morePosts.items
+  .filter((a) => a.fields.title !== title)
+  .slice(0, 2);
 ---
 
 <Layout title={title}>
   <div class="container mx-auto px-5">
-    <article
-      class="py-28 flex flex-col items-start prose prose-invert mx-auto max-w-3xl"
-    >
-      <span class="uppercase text-neutral-400 text-sm">
-        {formatDate(date)}
-      </span>
-      <h1 class="text-4xl xl:text-5xl font-black mt-2">{title}</h1>
+    <div class="flex py-28">
+      <article
+        class="flex flex-col items-start prose prose-invert mx-auto max-w-3xl"
+      >
+        <span class="uppercase text-neutral-400 text-sm">
+          {formatDate(date)}
+        </span>
+        <h1 class="text-4xl xl:text-5xl font-black mt-2">{title}</h1>
 
-      <img src={image} alt="" class="max-w-3xl my-4 w-full rounded-lg" />
+        <img src={image} alt="" class="max-w-3xl my-4 w-full rounded-lg" />
 
-      <div class="mt-2" set:html={content} />
-    </article>
+        <div class="mt-2" set:html={content} />
+      </article>
+      <aside class="lg:pl-28 flex-1 flex flex-col justify-end max-w-xl">
+        <h6 class="text-3xl font-bold">Also read</h6>
+        <div class="flex flex-col my-12 gap-10 lg:gap-20 mx-auto justify-end">
+          {
+            recentPostsOtherThanCurrent.map((post) => (
+              <BlogCard {post} key={post.fields.title} excerpt="false" />
+            ))
+          }
+        </div>
+      </aside>
+    </div>
   </div>
+  <Banner {banner} />
 </Layout>

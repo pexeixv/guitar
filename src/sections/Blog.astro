@@ -1,7 +1,7 @@
 ---
 import { contentfulClient } from "../lib/contentful";
 import type { BlogPost } from "../lib/contentful";
-import Blog from "../components/Blog.astro";
+import BlogCard from "../components/BlogCard.astro";
 
 const blogPosts = await contentfulClient.getEntries<BlogPost>({
   content_type: "blogPost",
@@ -14,7 +14,11 @@ const blogPosts = await contentfulClient.getEntries<BlogPost>({
   <div class="container mx-auto px-5 py-16">
     <h2 class="text-4xl xl:text-5xl font-black">Blog</h2>
     <div class="grid lg:grid-cols-3 mt-12 lg:mt-20 gap-10 lg:gap-20">
-      {blogPosts.items.map((post) => <Blog key={post.fields.title} {post} />)}
+      {
+        blogPosts.items.map((post) => (
+          <BlogCard key={post.fields.title} {post} />
+        ))
+      }
     </div>
   </div>
 </section>
